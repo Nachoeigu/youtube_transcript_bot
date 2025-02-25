@@ -1,12 +1,26 @@
 from model import YoutubeBot
+import json
 
-
-def main(url):
+def main(urls):
     bot = YoutubeBot()
-    title, content = bot.get_transcript(url)
-    return title, content
+    output = {}
+    for url in urls:
+        title, content = bot.get_transcript(url)
+
+        output[title] = content
+    
+    bot.quit()
+
+    
+    return output
 
 
 
 if __name__ == "__main__":
-    title, content = main("https://www.youtube.com/watch?v=qzD4fcd-FBY")
+    links = []
+    
+    output = main(links)
+
+    with open('output.json', 'w') as f:
+        json.dump(output, f, indent = 4)
+    
